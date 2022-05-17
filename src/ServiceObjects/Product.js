@@ -1,7 +1,7 @@
 
 
 export class Product  {
-;
+
     
     constructor(data) {
         this.store_id = data.store_id;
@@ -10,7 +10,7 @@ export class Product  {
         this.category = data.category;
         this.key_words = data.key_words;
         this.price = data.price;
-        this.productReview = data.productReview; /// another object
+        this.productReview = new ProductReview(data.productReviewInformation)
 
     }
     

@@ -1,10 +1,12 @@
 import axios from "axios";
+import { Cart } from "../ServiceObjects/Cart";
 import { VIEW_USER_CART, BUY_CART } from "./ApiPaths";
 import { Response } from "./Response";
+
 const instance = axios.create(
     {withCredentials : true}
 );
-
+const response_obj = new Response();
 
 
 export class CartApi {
@@ -12,7 +14,9 @@ export class CartApi {
     view_user_cart() {
         return instance.get(VIEW_USER_CART)
             .then(res => {
-                return new Response(res.data);
+                let response = res.data;
+                let cart = new Cart(response.value) ;
+                return response_obj.create(cart, response.message);
             })
             .catch(res => undefined);
     }

@@ -3,9 +3,9 @@ import {  FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE, SEND_QUESTION_TO_STORE
      ADD_PRODUCT_TO_STORE, DELETE_PRODUCT_FROM_CART, SET_STORE_PURCHASE_POLICY,
       SET_STORE_DISCOUNT_POLICY, SET_STORE_PURCHASE_RULES, ADD_OWNER, DELETE_OWNER, 
       ADD_MANAGER, DELETE_MANAGER, CLOSE_STORE_TEMPORARILY, OPEN_CLOSE_STORE,
-      VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, MANAGER_VIEW_USER_QUESTIONS, EDIT_MANAGER_PERMISSIONS} from "./ApiPaths";
+      VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS} from "./ApiPaths";
 import { Response } from "./Response";
-import { StoreInformation } from "../ServiceObjects/StoreInformation";
+import { StoreInformation } from "../ServiceObjects/Store";
 const instance = axios.create(
     {withCredentials : true}
 );
@@ -20,8 +20,8 @@ export class StoreApi {
                 store_id : store_id,
             })
             .then(res => {
-                response = res.data;
-                store_info = new StoreInformation(response.value);
+                let response = res.data;
+                let store_info = new StoreInformation(response.value);
                 return reponse_obj.create(store_info, response.message);
             })
             .catch(res => undefined);
@@ -209,12 +209,12 @@ export class StoreApi {
                 
             })
             .then(res => {
-                return new Response(res.data)
+                return new Response(res.data) //value is string answer
             })
             .catch(res => undefined);
     }
-    manager_view_user_questions(store_id){
-        return instance.post(MANAGER_VIEW_USER_QUESTIONS,
+    manager_view_store_questions(store_id){ // value is list of strings
+        return instance.post(MANAGER_VIEW_STORE_QUESTIONS,
             {
                 store_id : store_id,
 
@@ -237,7 +237,7 @@ export class StoreApi {
             })
             .catch(res => undefined);
     }
-    view_store_purchases_history(store_id){
+    view_store_purchases_history(store_id){ // value is string of the purchases history
         return instance.post(VIEW_STORE_PURCHASES_HISTORY,
             {
                 store_id : store_id,

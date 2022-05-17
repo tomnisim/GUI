@@ -44,7 +44,7 @@ export const CLOSE_STORE_TEMPORARILY= API_PATH + '/close_store_temporarily';
 export const OPEN_CLOSE_STORE= API_PATH + '/open_close_store';
 
 export const VIEW_STORE_MANAGEMENT_INFORMATION= API_PATH + '/view_store_management_information';
-export const MANAGER_VIEW_USER_QUESTIONS= API_PATH + '/manager_view_store_questions';
+export const MANAGER_VIEW_STORE_QUESTIONS= API_PATH + '/manager_view_store_questions';
 
 export const MANAGER_ANSWER_QUESTION= API_PATH + '/manager_answer_question';
 

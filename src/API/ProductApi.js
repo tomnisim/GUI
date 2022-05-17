@@ -2,6 +2,7 @@ import axios from "axios";
 import {EMPLOYEE_BASE_REST_API_URL,  FIND_PRODUCT_INFORMATION, FIND_PRODUCTS_BY_NAME, FIND_PRODUCTS_BY_CATEGORY,FIND_PRODUCTS_BY_KEYWORDS 
     ,ADD_PRODUCT_TO_CART, EDIT_PRODUCT_QUANTITY_IN_CART,REMOVE_PRODUCT_FROM_CART, ADD_PRODUCT_REVIEW, RATE_PRODUCT, EDIT_PRODUCT_NAME, EDIT_PRODUCT_PRICE, EDIT_PRODUCT_CATEGORY, EDIT_PRODUCT_KEY_WORDS} from "./ApiPaths";
 import { Response } from "./Response";
+import { Product } from "../ServiceObjects/Product";
 const instance = axios.create(
     {withCredentials : true}
 );
@@ -26,10 +27,11 @@ export class ProductApi {
                 product_id: product_id,
             })
             .then(res => {
-                console.log("this is the answer\n\n"+res.data)
-                return new Response(res.data)
+                let response = res.data;
+                let product_info = new Product(response.value);
+                return reponse_obj.create(product_info, response.message);
             })
-            .catch(res => console.log("fuckkkkk\n\n"));
+            .catch(res => undefined);
     }
     find_product_by_name(product_name) {
         return instance.post(FIND_PRODUCTS_BY_NAME,
@@ -51,6 +53,8 @@ export class ProductApi {
                 product_category: product_category,
             })
             .then(res => {
+                //traverse the products and create product for each element on the list
+                //create response with the list of products
                 return new Response(res.data)
             })
             .catch(res => undefined);
@@ -61,6 +65,8 @@ export class ProductApi {
                 product_keywords: product_keywords,
             })
             .then(res => {
+                //traverse the products and create product for each element on the list
+                //create response with the list of products
                 return new Response(res.data)
             })
             .catch(res => undefined);
